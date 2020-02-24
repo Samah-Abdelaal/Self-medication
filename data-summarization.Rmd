@@ -1,0 +1,2342 @@
+---
+title: "data-summarization"
+author: "Samah Abdelaal"
+date: "1/31/2020"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r}
+library(tidyverse)
+library(scales)
+library(RColorBrewer)
+
+selfmed <- read.csv("Data/self-medication.csv")
+attach(selfmed)
+```
+
+```{r}
+pie_theme <- theme_minimal()+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_text(size = 15, face = "bold"),
+        panel.border = element_blank(),
+        panel.grid=element_blank(),
+        axis.ticks = element_blank(),
+        plot.title=element_text(size=14, face="bold"))
+```
+
+#Did you have any disease in the last three months?
+
+```{r}
+selfmed %>%
+  filter(!is.na(Did.you.have.any.disease.in.the.last.three.months.)) %>%
+  group_by(Did.you.have.any.disease.in.the.last.three.months.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= Did.you.have.any.disease.in.the.last.three.months.)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    size = 8
+    ) +
+  labs(fill= "Did you have any disease in the last three months?")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+#Have you taken self-medication in the last three months?
+
+```{r}
+selfmed %>%
+  filter(!is.na(Have.you.taken.selfâ..medication.in.last.three.months.)) %>%
+  group_by(Have.you.taken.selfâ..medication.in.last.three.months.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= Have.you.taken.selfâ..medication.in.last.three.months.)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    size = 8
+    ) +
+  labs(fill= "Have you taken self-medication in the last three months?")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+#Reason for self-medication
+
+dcffh: Doctor / clinic far from home
+
+```{r}
+selfmed %>%
+  filter(!is.na(dcffh)) %>%
+  group_by(dcffh) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= dcffh,
+              y= percentage,
+              fill= dcffh)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Reason for self-medication:",
+       subtitle = "Doctor / clinic far from home") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+st: Saves time
+
+```{r}
+selfmed %>%
+  filter(!is.na(st)) %>%
+  group_by(st) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= st,
+              y= percentage,
+              fill= st)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Reason for self-medication:",
+       subtitle = "Saves time") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+hfod: high fees of doctor
+
+```{r}
+selfmed %>%
+  filter(!is.na(hfod)) %>%
+  group_by(hfod) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= hfod,
+              y= percentage,
+              fill= hfod)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Reason for self-medication:",
+       subtitle = "High fees of doctors") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+ihop: I have old prescription
+
+```{r}
+selfmed %>%
+  filter(!is.na(ihop)) %>%
+  group_by(ihop) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= ihop,
+              y= percentage,
+              fill= ihop)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Reason for self-medication:",
+       subtitle = "I have old prescription") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+dibwmp: Doctor is busy with many patients
+
+```{r}
+selfmed %>%
+  filter(!is.na(dibwmp)) %>%
+  group_by(dibwmp) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= dibwmp,
+              y= percentage,
+              fill= dibwmp)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Reason for self-medication:",
+       subtitle = "Doctor is busy with many patients") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+ihmofm: I have medicine of family members
+
+```{r}
+selfmed %>%
+  filter(!is.na(ihmofm)) %>%
+  group_by(ihmofm) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= ihmofm,
+              y= percentage,
+              fill= ihmofm)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Reason for self-medication:",
+       subtitle = "I have medicine of family members") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+ntid: No trust in doctor
+
+```{r}
+selfmed %>%
+  filter(!is.na(ntid)) %>%
+  group_by(ntid) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= ntid,
+              y= percentage,
+              fill= ntid)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Reason for self-medication:",
+       subtitle = "No trust in doctor") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+pa: Pharmacist advice
+
+```{r}
+selfmed %>%
+  filter(!is.na(pa)) %>%
+  group_by(pa) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= pa,
+              y= percentage,
+              fill= pa)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Reason for self-medication:",
+       subtitle = "Pharmacist advice") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+
+#For which disease have you taken self-medication in the last three months?
+
+headache : Headache
+
+```{r}
+selfmed %>%
+  filter(!is.na(headache)) %>%
+  group_by(headache) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= headache,
+              y= percentage,
+              fill= headache)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Headache") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+eyeinf : Eye infection
+
+```{r}
+selfmed %>%
+  filter(!is.na(eyeinf)) %>%
+  group_by(eyeinf) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= eyeinf,
+              y= percentage,
+              fill= eyeinf)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Eye infection") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+dandruff : Dandruff
+
+```{r}
+selfmed %>%
+  filter(!is.na(dandruff)) %>%
+  group_by(dandruff) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= dandruff,
+              y= percentage,
+              fill= dandruff)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Dandruff") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+runnose : Running nose
+
+```{r}
+selfmed %>%
+  filter(!is.na(runnose)) %>%
+  group_by(runnose) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= runnose,
+              y= percentage,
+              fill= runnose)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Running nose") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+hairfall : Hair fall
+
+```{r}
+selfmed %>%
+  filter(!is.na(hairfall)) %>%
+  group_by(hairfall) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= hairfall,
+              y= percentage,
+              fill= hairfall)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Hair fall") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+earpain : Ear pain
+
+```{r}
+selfmed %>%
+  filter(!is.na(earpain)) %>%
+  group_by(earpain) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= earpain,
+              y= percentage,
+              fill= earpain)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Ear pain") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+faints : Faints
+
+```{r}
+selfmed %>%
+  filter(!is.na(faints)) %>%
+  group_by(faints) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= faints,
+              y= percentage,
+              fill= faints)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Faints") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+mouthulcer : Mouth ulcer
+
+```{r}
+selfmed %>%
+  filter(!is.na(mouthulcer)) %>%
+  group_by(mouthulcer) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= mouthulcer,
+              y= percentage,
+              fill= mouthulcer)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Mouth ulcer") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+dentalpain : Dental pain
+
+```{r}
+selfmed %>%
+  filter(!is.na(dentalpain)) %>%
+  group_by(dentalpain) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= dentalpain,
+              y= percentage,
+              fill= dentalpain)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Dental pain") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+migraine : Migraine
+
+```{r}
+selfmed %>%
+  filter(!is.na(migraine)) %>%
+  group_by(migraine) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= migraine,
+              y= percentage,
+              fill= migraine)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Migraine") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+cough : Cough
+
+```{r}
+selfmed %>%
+  filter(!is.na(cough)) %>%
+  group_by(cough) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= cough,
+              y= percentage,
+              fill= cough)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Cough") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+acidity : Acidity
+
+```{r}
+selfmed %>%
+  filter(!is.na(acidity)) %>%
+  group_by(acidity) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= acidity,
+              y= percentage,
+              fill= acidity)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Acidity") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+rash : Rash
+
+```{r}
+selfmed %>%
+  filter(!is.na(rash)) %>%
+  group_by(rash) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= rash,
+              y= percentage,
+              fill= rash)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Rash") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+vomiting : Vomiting
+
+```{r}
+selfmed %>%
+  filter(!is.na(vomiting)) %>%
+  group_by(vomiting) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= vomiting,
+              y= percentage,
+              fill= vomiting)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Vomiting") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+fever : Fever
+
+```{r}
+selfmed %>%
+  filter(!is.na(fever)) %>%
+  group_by(fever) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= fever,
+              y= percentage,
+              fill= fever)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Fever") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+nausea : Nauseea
+
+```{r}
+selfmed %>%
+  filter(!is.na(nausea)) %>%
+  group_by(nausea) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= nausea,
+              y= percentage,
+              fill= nausea)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Nausea") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+skinop : Skin disease on open areas
+
+```{r}
+selfmed %>%
+  filter(!is.na(skinop)) %>%
+  group_by(skinop) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= skinop,
+              y= percentage,
+              fill= skinop)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Skin disease on open areas") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+asthma : Asthma
+
+```{r}
+selfmed %>%
+  filter(!is.na(asthma)) %>%
+  group_by(asthma) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= asthma,
+              y= percentage,
+              fill= asthma)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Asthma") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+diarrhea : Diarrhea
+
+```{r}
+selfmed %>%
+  filter(!is.na(diarrhea)) %>%
+  group_by(diarrhea) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= diarrhea,
+              y= percentage,
+              fill= diarrhea)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Diarrhea") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+jointpain : Pain in joints
+
+```{r}
+selfmed %>%
+  filter(!is.na(jointpain)) %>%
+  group_by(jointpain) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= jointpain,
+              y= percentage,
+              fill= jointpain)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Joint pain") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+menstrual : Menstrual Problems
+
+```{r}
+selfmed %>%
+  filter(!is.na(menstrual)) %>%
+  group_by(menstrual) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= menstrual,
+              y= percentage,
+              fill= menstrual)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Menstrual problems") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+genitalinf : Genital Infection
+
+```{r}
+selfmed %>%
+  filter(!is.na(genitalinf)) %>%
+  group_by(genitalinf) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= genitalinf,
+              y= percentage,
+              fill= genitalinf)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Genital infection") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+musclepain : Muscle pain
+
+```{r}
+selfmed %>%
+  filter(!is.na(musclepain)) %>%
+  group_by(musclepain) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= musclepain,
+              y= percentage,
+              fill= musclepain)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Muscle pain") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+urination : Urination problems
+
+```{r}
+selfmed %>%
+  filter(!is.na(urination)) %>%
+  group_by(urination) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= urination,
+              y= percentage,
+              fill= urination)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Urination problems") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+wounds : Wounds
+
+```{r}
+selfmed %>%
+  filter(!is.na(wounds)) %>%
+  group_by(wounds) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= wounds,
+              y= percentage,
+              fill= wounds)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "For which disease have you taken self-medication in the last three months?",
+       subtitle = "Wounds") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+
+#What do you consider while selecting the drug for self-medication?
+
+price : Price
+
+```{r}
+selfmed %>%
+  filter(!is.na(price)) %>%
+  group_by(price) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= price,
+              y= percentage,
+              fill= price)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "What do you consider while selecting the drug for self-medication?",
+       subtitle = "Price") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+company : Pharmaceutical Company
+
+```{r}
+selfmed %>%
+  filter(!is.na(company)) %>%
+  group_by(company) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= company,
+              y= percentage,
+              fill= company)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "What do you consider while selecting the drug for self-medication?",
+       subtitle = "Pharmaceutical company") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+type : Type of medicine
+
+```{r}
+selfmed %>%
+  filter(!is.na(type)) %>%
+  group_by(type) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= type,
+              y= percentage,
+              fill= type)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "What do you consider while selecting the drug for self-medication?",
+       subtitle = "Type of medicine") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+
+#Where do you obtain your drugs for self-medication?
+
+ps : Pharmacy shop
+
+```{r}
+selfmed %>%
+  filter(!is.na(ps)) %>%
+  group_by(ps) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= ps,
+              y= percentage,
+              fill= ps)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Where do you obtain your drugs for self-medication?",
+       subtitle = "Pharmacy shop") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+os : Online shopping
+
+```{r}
+selfmed %>%
+  filter(!is.na(os)) %>%
+  group_by(os) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= os,
+              y= percentage,
+              fill= os)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Where do you obtain your drugs for self-medication?",
+       subtitle = "Online shopping") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+mr : Medical representatives
+
+```{r}
+selfmed %>%
+  filter(!is.na(mr)) %>%
+  group_by(mr) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= mr,
+              y= percentage,
+              fill= mr)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Where do you obtain your drugs for self-medication?",
+       subtitle = "Medical representatives") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+phc : Primary health care centre
+
+```{r}
+selfmed %>%
+  filter(!is.na(phc)) %>%
+  group_by(phc) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= phc,
+              y= percentage,
+              fill= phc)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Where do you obtain your drugs for self-medication?",
+       subtitle = "Primary healthcare center") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+ff : Friends / family
+
+```{r}
+selfmed %>%
+  filter(!is.na(ff)) %>%
+  group_by(ff) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= ff,
+              y= percentage,
+              fill= ff)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Where do you obtain your drugs for self-medication?",
+       subtitle = "Friends / family") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+
+#Do you check the prescribing information before self-medication?
+
+```{r}
+selfmed %>%
+  filter(!is.na(Do.you.check.the.prescribing.information.before.selfâ..medicating.)) %>%
+  group_by(Do.you.check.the.prescribing.information.before.selfâ..medicating.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= Do.you.check.the.prescribing.information.before.selfâ..medicating.)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 8
+    ) +
+  labs(fill= "Do you check the prescribing information before self-medication?")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+#If answer is yes or maybe, how much did you understand from the instructions?
+
+```{r}
+selfmed %>%
+  filter(!is.na(If.your.answer.is.Yes..always.or.Yes..sometimes.then..How.much.did.you.understand.from.the.instructions.of.prescribing.information.)) %>%
+  group_by(If.your.answer.is.Yes..always.or.Yes..sometimes.then..How.much.did.you.understand.from.the.instructions.of.prescribing.information.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= If.your.answer.is.Yes..always.or.Yes..sometimes.then..How.much.did.you.understand.from.the.instructions.of.prescribing.information.,
+              y= percentage,
+              fill= If.your.answer.is.Yes..always.or.Yes..sometimes.then..How.much.did.you.understand.from.the.instructions.of.prescribing.information.)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "If answer is yes or maybe, how much did you understand from the instructions?") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+#Have you ever experienced adverse events with self-medication?
+
+```{r}
+selfmed %>%
+  filter(!is.na(X9..Have.you.ever.experienced.adverse.events.with.selfâ..medication.)) %>%
+  group_by(X9..Have.you.ever.experienced.adverse.events.with.selfâ..medication.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= X9..Have.you.ever.experienced.adverse.events.with.selfâ..medication.)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 8
+    ) +
+  labs(fill= "Have you ever experienced adverse events with self-medication?")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+#If yes, Explain
+
+```{r}
+selfmed %>%
+  filter(!is.na(If.yes...Explain)) %>%
+  select(If.yes...Explain)
+```
+
+#If answer is yes, what did you do for the adverse event you experienced?
+
+gtpd : Go to private doctor
+
+```{r}
+selfmed %>%
+  filter(!is.na(gtpd)) %>%
+  group_by(gtpd) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= gtpd)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.6),
+    , size = 8
+    ) +
+  labs(title = "What did you do for the adverse event you experienced?",
+       fill= "Go to private doctor")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+gtph : Go to pharmacist
+
+```{r}
+selfmed %>%
+  filter(!is.na(gtph)) %>%
+  group_by(gtph) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= gtph)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "What did you do for the adverse event you experienced?",
+       fill= "Go to pharmacist")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+gtphc : Go to primary health care center
+
+```{r}
+selfmed %>%
+  filter(!is.na(gtphc)) %>%
+  group_by(gtphc) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+ ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= gtphc)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "What did you do for the adverse event you experienced?",
+       fill= "Go to primary healthcare center")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+stm : Stop taking medication
+
+```{r}
+selfmed %>%
+  filter(!is.na(stm)) %>%
+  group_by(stm) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= stm)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "What did you do for the adverse event you experienced?",
+       fill= "Stop taking medication")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+
+#Are you taking self-medication for any chronic disease?
+
+```{r}
+selfmed %>%
+  filter(!is.na(Are.you.taking.selfâ..medication.for.any.chronic.disease.)) %>%
+  group_by(Are.you.taking.selfâ..medication.for.any.chronic.disease.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= Are.you.taking.selfâ..medication.for.any.chronic.disease.)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(fill= "Are you taking self-medication for any chronic disease?")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+#If answer to the question above is yes, then How long you have been taking self‐medication for any chronic disease?
+
+```{r}
+selfmed %>%
+  filter(!is.na(If.answer.to.the.question.above.is.yes..then..How.long.you.have.been.taking.selfâ..medication.for.any.chronic.disease.)) %>%
+  select(If.answer.to.the.question.above.is.yes..then..How.long.you.have.been.taking.selfâ..medication.for.any.chronic.disease.)
+```
+
+#Did you have any infection in the last three months?
+
+```{r}
+selfmed %>%
+  filter(!is.na(Did.you.have.any.infection.in.last.three.months.)) %>%
+  group_by(Did.you.have.any.infection.in.last.three.months.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=Did.you.have.any.infection.in.last.three.months.)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(fill= "Did you have any infection in the last three months?")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+#Have you ever self‐medicated yourself with anti‐infective?
+
+```{r}
+selfmed %>%
+  filter(!is.na(Have.you.ever.selfâ..medicated.yourself.with.antiâ..infective.)) %>%
+  group_by(Have.you.ever.selfâ..medicated.yourself.with.antiâ..infective.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=Have.you.ever.selfâ..medicated.yourself.with.antiâ..infective.)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(fill= "Have you ever self‐medicated yourself with anti‐infective")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+#For which of the following diseases did you self‐medicate with anti‐infectives?
+
+eyeinf2 : Eye infection
+
+```{r}
+selfmed %>%
+  filter(!is.na(eyeinf2)) %>%
+  group_by(eyeinf2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=eyeinf2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Eye infection")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+skinop2 : Skin infection of open areas
+
+```{r}
+selfmed %>%
+  filter(!is.na(skinop2)) %>%
+  group_by(skinop2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=skinop2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Skin infection of open areas")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+skinco : Skin infection of covered areas
+
+```{r}
+selfmed %>%
+  filter(!is.na(skinco)) %>%
+  group_by(skinco) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=skinco)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Skin infection of covered areas")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+runnose2 : Running nose
+
+```{r}
+selfmed %>%
+  filter(!is.na(runnose2)) %>%
+  group_by(runnose2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=runnose2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Running nose")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+earpain2 : Ear pain
+
+```{r}
+selfmed %>%
+  filter(!is.na(earpain2)) %>%
+  group_by(earpain2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=earpain2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Ear pain")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+genitalinf2 : Genital infection
+
+```{r}
+selfmed %>%
+  filter(!is.na(genitalinf2)) %>%
+  group_by(genitalinf2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=genitalinf2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Genital infection")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+cough2 : Cough
+
+```{r}
+selfmed %>%
+  filter(!is.na(cough2)) %>%
+  group_by(cough2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=cough2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Cough")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+soarthroat : sore throat
+
+```{r}
+selfmed %>%
+  filter(!is.na(soarthroat)) %>%
+  group_by(soarthroat) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=soarthroat)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Sore throat")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+urination2 : Urinary problem
+
+```{r}
+selfmed %>%
+  filter(!is.na(urination2)) %>%
+  group_by(urination2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=urination2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Urinary problem")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+dentalpain2 : Dental pain
+
+```{r}
+selfmed %>%
+  filter(!is.na(dentalpain2)) %>%
+  group_by(dentalpain2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=dentalpain2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Dental pain")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+menstrual2 : Menstrual problems
+
+```{r}
+selfmed %>%
+  filter(!is.na(menstrual2)) %>%
+  group_by(menstrual2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= menstrual2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Menstrual problems")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+vomiting2 : vomiting
+
+```{r}
+selfmed %>%
+  filter(!is.na(vomiting2)) %>%
+  group_by(vomiting2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill=vomiting2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Vomiting")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+diarrhea2 : Diarrhea
+
+```{r}
+selfmed %>%
+  filter(!is.na(diarrhea2)) %>%
+  group_by(diarrhea2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= diarrhea2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Diarrhea")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+fever2 : Fever
+
+```{r}
+selfmed %>%
+  filter(!is.na(fever2)) %>%
+  group_by(fever2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= fever2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Fever")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+wounds2 : Wounds
+
+```{r}
+selfmed %>%
+  filter(!is.na(wounds2)) %>%
+  group_by(wounds2) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= wounds2)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "For which of the following diseases did you self‐medicate with anti‐infectives?",
+       fill= "Wounds")+
+  pie_theme +
+  scale_fill_brewer(palette = "BrBG")
+```
+
+#From the above Which was the most recent infection for which you self medicated?
+
+```{r}
+selfmed %>%
+  filter(!is.na(From.the.above..Which.was.the.most.recent.infection.for.which.you.self.medicated.)) %>%
+  select(From.the.above..Which.was.the.most.recent.infection.for.which.you.self.medicated.)
+```
+
+#How did you know the dosage of anti‐infectives?
+
+ai_dose
+
+```{r}
+selfmed %>%
+  filter(!is.na(ai_dose)) %>%
+  group_by(ai_dose) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= ai_dose,
+              y= percentage,
+              fill= ai_dose)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "How did you know the dosage of anti‐infectives?") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+#Did you ever change the dosage of anti‐infectives during the course of self‐medication?
+
+```{r}
+selfmed %>%
+  filter(!is.na(Did.you.ever.change.the.dosage.of.antiâ..infectives.during.the.course.of.selfâ..medication.)) %>%
+  group_by(Did.you.ever.change.the.dosage.of.antiâ..infectives.during.the.course.of.selfâ..medication.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= Did.you.ever.change.the.dosage.of.antiâ..infectives.during.the.course.of.selfâ..medication.,
+              y= percentage,
+              fill= Did.you.ever.change.the.dosage.of.antiâ..infectives.during.the.course.of.selfâ..medication.)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Did you ever change the dosage of anti‐infectives during the course of self‐medication") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+#Why did you change the dosage of anti‐infectives during the course of self‐medication?
+
+dose_change
+
+```{r}
+selfmed %>%
+  filter(!is.na(dose_change)) %>%
+  group_by(dose_change) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= dose_change,
+              y= percentage,
+              fill= dose_change)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Why did you change the dosage of anti‐infectives during the course of self‐medication?") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+#Last time when you used anti‐infective, did you change that anti‐infective/s during self-medication?
+
+```{r}
+selfmed %>%
+  filter(!is.na(Last.time.when.you.used.antiâ..infective..did.you.change.that.antiâ..infective.s.during.self.medication..)) %>%
+  group_by(Last.time.when.you.used.antiâ..infective..did.you.change.that.antiâ..infective.s.during.self.medication..) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= Last.time.when.you.used.antiâ..infective..did.you.change.that.antiâ..infective.s.during.self.medication..,
+              y= percentage,
+              fill= Last.time.when.you.used.antiâ..infective..did.you.change.that.antiâ..infective.s.during.self.medication..)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Last time when you used anti‐infective, did you change that anti‐infective/s during self-medication?") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+#If yes: Why did you change anti‐infectives during self‐medication?
+
+ai_change
+
+```{r}
+selfmed %>%
+  filter(!is.na(ai_change)) %>%
+  group_by(ai_change) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= ai_change,
+              y= percentage,
+              fill= ai_change)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Why did you change anti‐infectives during self‐medication?") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+#When did you stop taking anti‐infectives?
+
+ai_stop
+
+```{r}
+selfmed %>%
+  filter(!is.na(ai_stop)) %>%
+  group_by(ai_stop) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= ai_stop,
+              y= percentage,
+              fill= ai_stop)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "When did you stop taking anti-infectives?") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+#Where did you get the knowledge about the course of anti‐infectives?
+
+pi : Prescribing information
+
+```{r}
+selfmed %>%
+  filter(!is.na(pi)) %>%
+  group_by(pi) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= pi)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "Where did you get the knowledge about the course of anti‐infectives?",
+       fill = "Prescribing information")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+ph : Pharmacist
+
+```{r}
+selfmed %>%
+  filter(!is.na(ph)) %>%
+  group_by(ph) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= ph)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "Where did you get the knowledge about the course of anti‐infectives?",
+       fill = "Pharmacist")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+phcc : Primary health care center
+
+```{r}
+selfmed %>%
+  filter(!is.na(phcc)) %>%
+  group_by(phcc) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= phcc)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "Where did you get the knowledge about the course of anti‐infectives?",
+       fill = "Primary healthcare center")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+doc : Doctors
+
+```{r}
+selfmed %>%
+  filter(!is.na(doc)) %>%
+  group_by(doc) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= doc)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "Where did you get the knowledge about the course of anti‐infectives?",
+       fill = "Doctors")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+pff : Peers- Family/ Friends
+
+```{r}
+selfmed %>%
+  filter(!is.na(pff)) %>%
+  group_by(pff) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(
+      aes(x= "",
+               y= percentage,
+               fill= pff)
+           )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+            position = position_stack(vjust = 0.5),
+    , size = 5
+    ) +
+  labs(title = "Where did you get the knowledge about the course of anti‐infectives?",
+       fill = "Peers- Family / friends")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+```
+
+
+#Health insurance
+
+```{r}
+selfmed %>%
+  filter(!is.na(What.kind.of.health.insurance.do.you.have.this.year.)) %>%
+  group_by(What.kind.of.health.insurance.do.you.have.this.year.) %>%
+  summarise(counts = n()) %>%
+  mutate(percentage= round((counts / sum(counts))*100)) %>%
+  ggplot(aes(x= What.kind.of.health.insurance.do.you.have.this.year.,
+              y= percentage,
+              fill= What.kind.of.health.insurance.do.you.have.this.year.)) +
+  geom_bar(width = 0.3,
+           stat = "identity") +
+  coord_flip() +
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    size= 5,
+    vjust = -2,
+    hjust= 0.7
+    ) +
+  labs(title = "Health insurance") +
+  pie_theme +
+  theme(legend.position = "none",
+        plot.subtitle = element_text(face = "bold",
+                                     size = 20,
+                                     vjust = -1.5)) +
+  scale_fill_brewer(palette = "Dark2")
+```

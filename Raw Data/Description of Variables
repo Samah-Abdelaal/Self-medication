@@ -1,0 +1,139 @@
+What was your reason for self-medication?
+
+dcffh: Doctor / clinic far from home
+st: Saves time
+hfod: high fees of doctor
+ihop: I have old prescription
+dibwmp: Doctor is busy with many patients
+ihmofm: I have medicine of family members
+ntid: No trust in doctor
+pa: Pharmacist advice
+.......
+
+For which disease you have taken self-medicaton in last 3 months?
+
+headache : Headache
+eyeinf : Eye infection
+dandruff : Dandruff
+runnose : Running nose
+hairfall : Hair fall
+earpain : Ear pain
+faints : Faints
+mouthulcer : Mouth ulcer
+dentalpain : Dental pain
+migraine : Migraine
+cough : Cough
+acidity : Acidity
+rash : Rash
+vomiting : Vomiting
+fever : Fever
+nausea : Nauseea
+skinop : Skin disease on open areas
+asthma : Asthma
+diarrhea : Diarrhea
+jointpain : Pain in joints
+menstrual : Menstrual Problems
+genitalinf : Genital Infection
+musclepain : Muscle pain
+urination : Urination problems
+wounds : Wounds
+.......
+
+What do you consider while selecting the drug for self‐medication ?
+
+price : Price
+company : Pharmaceutical Company
+type : Type of medicine
+.......
+
+Where do you obtain your drugs for self‐medication?
+
+ps : Pharmacy shop
+os : Online shopping
+mr : Medical representatives
+phc : Primary health care centre
+ff : Friends / family
+.......
+
+If answer to the question is yes, then 
+
+What did you do for the adverse event you experienced?
+
+gtpd : Go to private doctor
+gtph : Go to pharmacist
+gtphc : Go to primary health care center
+stm : Stop taking medication
+.......
+
+For which of the following diseases did you self‐medicate with anti‐infectives?
+
+eyeinf2 : Eye infection
+skinop2 : Skin infection of open areas
+skinco : Skin infection of covered areas
+runnose2 : Running nose
+earpain2 : Ear pain
+genitalinf2 : Genital infection
+cough2 : Cough
+soarthroat : sore throat
+urination2 : Urinary problem
+dentalpain2 : Dental pain
+menstrual2 : Menstrual problems
+vomiting2 : vomiting
+diarrhea2 : Diarrhea
+fever2 : Fever
+wounds2 : Wounds
+.......
+
+How did you know the dosage of anti‐infectives?
+
+ai_dose:
+
+By checking the prescribing information
+Consulting pharmacist
+Internet
+Consulting doctor 
+Consulting peers-Friends /family
+Previous experience
+Consulting primary healthcare center
+Advertisements
+Guessing the dosage by myself
+.......
+
+Why did you change the dosage of anti‐infectives during the course of self‐medication?
+
+dose_change:
+
+Health improved
+Disease worsened
+Drug insufficient for self‐ medication
+To reduce adverse events
+.......
+
+If yes: Why did you change anti‐infectives during self‐medication?
+
+ai_change:
+
+The former anti‐infective did not work
+Pharmacy ran out of former
+The former anti‐infective got over
+To reduce adverse events
+The latter one was cheaper
+.......
+
+When did you stop taking anti‐infectives?
+
+ai_stop:
+
+After a few days regardless of the outcome
+After symptoms disappeared
+After anti‐infective got over
+After complete course of anti‐infective
+.......
+
+Where did you get the knowledge about course of anti‐infectives?You can select multiple choices .
+
+pi : Prescribing information
+ph : Pharmacist
+phcc : Primary health care center
+doc : Doctors
+pff : Peers- Family/ Friends

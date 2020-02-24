@@ -1,0 +1,63 @@
+Calculation of social class
+
+Residence : 2
+
+rural = 1
+urban = 2
+
+Occupation  : 12
+
+Father
+
+Non-working/house wife = 1
+Unskilled manual worker = 2
+Skilled manual worker = 3
+Farmer = 4
+Trades/business = 5
+Professional = 6
+
+Mother
+
+Non-working/house wife = 1
+Unskilled manual worker = 2
+Skilled manual worker = 3
+Farmer = 4
+Trades/business = 5
+Professional = 6
+
+Education : 12
+
+Father
+
+Illiterate = 1
+Read and write = 2
+Primary = 3
+Secondary = 4
+University graduate = 5
+Postgraduate degree = 6
+
+Mother
+
+Illiterate = 1
+Read and write = 2
+Primary = 3
+Secondary = 4
+University graduate = 5
+Postgraduate degree = 6
+
+Crowding index : 2
+
+> 1 = 1
+< 1 = 2
+
+Income : 2
+
+Not enough = 1
+Enough = 2
+
+Total = 30
+
+< 25% : very low
+25 - 50 : low
+50 - 75 : moderate
+> 75% : high

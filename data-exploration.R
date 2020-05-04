@@ -1332,8 +1332,9 @@ selfmed %>%
   coord_polar(theta = "y")+
   geom_text(
     aes(label = paste(percentage, "%")),
-    position = position_stack(vjust = 0.5),
-    , size = 8
+    position = position_stack(vjust = 0.55),
+    hjust = 0.4,
+    size = 8
   ) +
   labs(fill= "Do you check the prescribing information before self-medication?")+
   pie_theme +
@@ -1359,12 +1360,18 @@ selfmed %>%
     vjust = -2,
     hjust= 0.7
   ) +
-  labs(title = "If answer is yes or maybe, how much did you understand from the instructions?") +
+  labs(title = "If answer is yes or maybe, ",
+  subtitle = "how much did you understand from the instructions?") +
   pie_theme +
   theme(legend.position = "none",
+        plot.title = element_text(face = "bold",
+                                     size = 15,
+                                     vjust = 3.2,
+                                     hjust = -0.8),
         plot.subtitle = element_text(face = "bold",
-                                     size = 20,
-                                     vjust = -1.5)) +
+                                     size = 15,
+                                     vjust = 3.2,
+                                     hjust = -249)) +
   scale_fill_brewer(palette = "Dark2")
 
 #Have you ever experienced adverse events with self-medication?
@@ -1385,7 +1392,8 @@ selfmed %>%
   geom_text(
     aes(label = paste(percentage, "%")),
     position = position_stack(vjust = 0.5),
-    , size = 8
+    hjust = 0.3,
+    size = 8
   ) +
   labs(fill= "Have you ever experienced adverse events with self-medication?")+
   pie_theme +
@@ -2288,8 +2296,9 @@ selfmed %>%
   labs(title = "Health insurance") +
   pie_theme +
   theme(legend.position = "none",
-        plot.subtitle = element_text(face = "bold",
+        plot.title = element_text(face = "bold",
                                      size = 20,
-                                     vjust = -1.5)) +
+                                     vjust = 3.2,
+                                  hjust = -2)) +
   scale_fill_brewer(palette = "Dark2")
 

@@ -69,21 +69,21 @@ eduMother[is.na(eduMother)] <- 5
 eduMother
 
 # Total number of family members
-Total.number.of.family.members.staying.with.you.in.this.house
+selfmed$Total.number.of.family.members.staying.with.you.in.this.house
 
 # Replacing NAs with 4
-Total.number.of.family.members.staying.with.you.in.this.house[is.na(Total.number.of.family.members.staying.with.you.in.this.house)] <- 4
+selfmed$Total.number.of.family.members.staying.with.you.in.this.house[is.na(selfmed$Total.number.of.family.members.staying.with.you.in.this.house)] <- 4
 
 # Number of rooms
-Number.of.rooms
+selfmed$Number.of.rooms
 
 # Crowding index
-crowd <- ifelse((Total.number.of.family.members.staying.with.you.in.this.house/
-                   Number.of.rooms)> 1, 1, 2)
+crowd <- ifelse((selfmed$Total.number.of.family.members.staying.with.you.in.this.house/
+                   selfmed$Number.of.rooms)> 1, 1, 2)
 crowd
 
 # Income
-income <- ifelse(Total.house.income..month == "Enough", 2, 1)
+income <- ifelse(selfmed$Total.house.income..month == "Enough", 2, 1)
 income
 
 # Score
@@ -96,10 +96,37 @@ selfmed <- selfmed %>%
           mutate(social_class = ifelse(score >= 75, "High",
                 ifelse(score >= 50, "Moderate",
                 ifelse(score >= 25, "Low", "Very low"))))
-social_class
+selfmed$social_class
 
+pie_theme <- theme_minimal()+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_text(size = 15, face = "bold"),
+        panel.border = element_blank(),
+        panel.grid=element_blank(),
+        axis.ticks = element_blank(),
+        plot.title=element_text(size=14, face="bold"))
 
 selfmed %>%
   group_by(social_class) %>%
    summarise(counts = n())%>%
-     mutate(percent = round((counts/ sum(counts)*100)))
+     mutate(percentage = round((counts/ sum(counts)*100))) %>%
+  print() %>%
+  ggplot(
+    aes(x= "",
+        y= percentage,
+        fill= social_class)
+    )+
+  geom_bar(stat = "identity")+ 
+  coord_polar(theta = "y")+
+  geom_text(
+    aes(label = paste(percentage, "%")),
+    position = position_stack(vjust = 0.55),
+    hjust = 0.4,
+    size = 8
+    ) +
+  labs(fill= "Social Class")+
+  pie_theme +
+  scale_fill_brewer(palette = "Set2")
+
